@@ -2,16 +2,9 @@ from django.shortcuts import render
 
 from django.core.paginator import Paginator
 
-questions = [
-    {
-        'id': idx,
-        'tag': ['black-jack', 'bender'],
-        'title': f'title {idx}',
-        'text': 'text text',
-        'likes': idx,
-        'answers': idx,
-    } for idx in range(10)
-]
+from app.models import Question
+from app.models import Answer
+from app.models import Profile
 
 answers = [
     {
@@ -22,12 +15,14 @@ answers = [
 ]
 
 def new_questions(request):
+    questions = Question.objects.all()
     page = paginate(questions, request, 3)
     return render(request, 'new_questions.html', {
         'questions': page,
     })
 
 def hot_questions(request):
+    questions = Question.objects.best()
     page = paginate(questions, request, 3)
     return render(request, 'hot_questions.html', {
         'questions': page
@@ -43,11 +38,11 @@ def ask_question(request):
     return render(request, 'ask.html', {})
 
 def question(request, pk):
-    question = questions[pk]
-    page = paginate(answers, request, 3)
+    questions = Question.objects.one(pk)
+    answers = Answer.objects.all()
     return render(request, 'question.html', {
-        'question': question,
-        'answers': page,
+        'questions': questions,
+        'answers': answers,
     })
 
 def signup_page(request):
@@ -55,11 +50,11 @@ def signup_page(request):
 
 
 def tagged_questions(request, pk):
-    tag1 = pk
+    questions = Question.objects.tag(pk)
     page = paginate(questions, request, 3)
     return render(request, 'tagged_questions.html', {
         'questions': page,
-        'tag': tag1,
+        'tag': pk,
     })
 
 def paginate(object_list, request, per_page=10):

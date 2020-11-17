@@ -4,9 +4,7 @@
 {% block content %}
     <div class="new-questions-title">Tag: {{ tag }}</div>
     {% for question in questions %}
-        {% if tag == question.tag.1 %}
-            {% include 'inc/inc_question.html' %}
-        {% endif %}
+        {% include 'inc/inc_question.html' %}
     {% endfor %}
     
 {% endblock content %}

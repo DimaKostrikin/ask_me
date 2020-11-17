@@ -2,8 +2,12 @@
 {% load static %}
 
 {% block content %}
-    <legend>Question #{{ question.id }}</legend>
-    {% include 'inc/inc_question.html' %}
+    {% for question in questions %}
+        <legend>Question #{{ question.id }}</legend>
+    {% endfor %}
+    {% for question in questions %}
+        {% include 'inc/inc_question.html' %}
+    {% endfor %}
     {% for answer in answers %}
         {% include 'inc/inc_answer.html' %}
     {% endfor %}
