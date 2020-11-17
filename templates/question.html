@@ -1,0 +1,21 @@
+{% extends 'inc/base.html' %}
+{% load static %}
+
+{% block content %}
+    <legend>Question #{{ question.id }}</legend>
+    {% include 'inc/inc_question.html' %}
+    {% for answer in answers %}
+        {% include 'inc/inc_answer.html' %}
+    {% endfor %}
+
+<div class="form-group row">
+    <label for="exampleFormControlTextarea1"></label>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="8"
+        placeholder="Enter your answer here..."></textarea>
+    <button type="button" class="btn btn-dark">Answer</button>
+</div>
+{% endblock content %}
+
+{% block right-side %}
+{% include 'inc/right-side.html' %}
+{% endblock right-side %}

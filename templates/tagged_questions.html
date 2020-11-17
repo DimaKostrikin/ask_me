@@ -1,0 +1,16 @@
+{% extends 'inc/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="new-questions-title">Tag: {{ tag }}</div>
+    {% for question in questions %}
+        {% if tag == question.tag.1 %}
+            {% include 'inc/inc_question.html' %}
+        {% endif %}
+    {% endfor %}
+    
+{% endblock content %}
+
+{% block right-side %}
+    {% include 'inc/right-side.html' %}
+{% endblock right-side %}

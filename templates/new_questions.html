@@ -1,0 +1,16 @@
+{% extends 'inc/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="row">
+        <div class="new-questions-title">New Questions</div>
+        <a class="hot-questions" href="/hot">Hot Questions</a>
+    </div>
+    {% for question in questions %}
+        {% include 'inc/inc_question.html' %}
+    {% endfor %}
+{% endblock content %}
+
+{% block right-side %}
+    {% include 'inc/right-side.html' %}
+{% endblock right-side %}

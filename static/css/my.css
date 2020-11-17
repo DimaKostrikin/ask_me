@@ -1,0 +1,138 @@
+/* Custom page CSS
+-------------------------------------------------- */
+
+
+/* Not required for template or sticky footer method. */
+
+main>.container {
+    padding: 60px 15px 0;
+}
+
+.footer {
+    background-color: #adadad;
+}
+
+.footer>.container {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+code {
+    font-size: 80%;
+}
+
+.question-box {
+    margin-top: 30px;
+    border: 1px solid grey;
+    border-radius: 5px;
+    padding: 20px;
+}
+
+.question-img {
+    max-width: 100%;
+    float: left;
+}
+
+.question-title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.likes_count {
+    margin-top: 12px
+}
+
+.profile-avatar {
+    max-width: 50px;
+    margin-left: 40%;
+}
+
+.form-control {
+    margin-right: 4px;
+}
+
+.username-text {
+    color: wheat;
+}
+
+.profile-settings {
+    margin-right: 10px;
+}
+
+.new-questions-title {
+    font-size: 30px;
+    margin-top: 20px;
+    margin-right: 20px;
+}
+
+.hot-questions {
+    margin-top: 34px;
+}
+
+.popular-tags-title {
+    font-size: 30px;
+}
+
+.tags {
+    margin-right: 12px;
+}
+
+.right-side {
+    padding-top: 18px;
+    padding-left: 25px;
+}
+
+.best-members-title {
+    font-size: 30px;
+}
+
+.answers {
+    position: relative;
+    padding-top: 30px;
+    padding-bottom: 0px;
+    padding-right: 10px;
+}
+
+.tags-title {
+    padding-top: 30px;
+    margin-left: 0px;
+}
+
+.tag-ref {
+    padding-top: 30px;
+    position: relative;
+    margin-left: 10px;
+    bottom: 0;
+}
+
+
+.answer-img {
+    max-width: 70%;
+}
+
+.answer-box {
+    margin-top: 30px;
+    border: 1px solid grey;
+    border-radius: 5px;
+    padding: 20px;
+}
+
+.form-check {
+    margin-top: 50px;
+}
+
+.tag-title {
+    font-size: 30px;
+    padding-top: 20px;
+}
+
+.settings-title {
+    font-size: 30px;
+    padding-top: 20px;
+}
+
+.button-path {
+    margin-top: -38px;
+    margin-left: 100%;
+}
+
