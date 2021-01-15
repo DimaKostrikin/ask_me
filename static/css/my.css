@@ -62,7 +62,10 @@ code {
 .new-questions-title {
     font-size: 30px;
     margin-top: 20px;
-    margin-right: 20px;
+}
+
+.arrows-likes {
+    padding-left: 50%;
 }
 
 .hot-questions {
@@ -88,23 +91,31 @@ code {
 
 .answers {
     position: relative;
-    padding-top: 30px;
-    padding-bottom: 0px;
-    padding-right: 10px;
+    top: 20px;
 }
 
 .tags-title {
-    padding-top: 30px;
-    margin-left: 0px;
+    position: relative;
+    top: 20px;
+    padding-left: 5px;
 }
 
 .tag-ref {
-    padding-top: 30px;
     position: relative;
-    margin-left: 10px;
-    bottom: 0;
+    top: 20px;
+    padding-left: 5px;
 }
 
+.question-profile {
+    position: relative;
+    top: 20px;
+}
+
+.question-time {
+    position: relative;
+    top: 20px;
+    padding-left: 5px;
+}
 
 .answer-img {
     max-width: 70%;
@@ -134,5 +145,9 @@ code {
 .button-path {
     margin-top: -38px;
     margin-left: 100%;
+}
+
+.pagination {
+    margin-left: 50%;
 }
 

@@ -11,6 +11,15 @@ class Profile(models.Model):
         verbose_name = 'Профиль'
         verbose_name_plural = 'Профили'
 
+class Tag(models.Model):
+    tag_name = models.CharField(unique=True, max_length=32, verbose_name='Имя тега')
+
+    def __str__(self):
+        return self.tag_name
+
+    class Meta:
+        verbose_name = 'Тег'
+        verbose_name_plural = 'Теги'
 
 class QuestionManager(models.Manager):
     def published(self):
@@ -28,7 +37,12 @@ class Question(models.Model):
     tag = models.CharField(max_length=16, verbose_name='Тэг вопроса')
     is_published = models.BooleanField(default=False, verbose_name='Опубликован')
     likes = models.IntegerField(verbose_name='Лайки')
+
+    date = models.DateField(auto_now_add=True, verbose_name="Дата вопроса")
+    
     author = models.ForeignKey('Profile', on_delete=models.CASCADE)
+    
+    count_answers = models.IntegerField(verbose_name='Кол-во ответов')
 
     objects = QuestionManager()
 
@@ -48,6 +62,9 @@ class Answer(models.Model):
     likes = models.IntegerField(verbose_name='Кол-во лайков')
     #question = models.ForeignKey('Question', on_delete=models.CASCADE)
 
+    author = models.ForeignKey('Profile', on_delete=models.CASCADE)
+
+    question = models.ForeignKey('Question', on_delete=models.CASCADE)
     objects = AnswerManager()
 
     class Meta:

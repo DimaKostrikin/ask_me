@@ -2,12 +2,16 @@
 {% load static %}
 
 {% block content %}
-    <div class="new-questions-title">Hot Questions</div>
-     {% for question in questions %}
-        {% if question.likes >= 0 %}
+    <div class="row">
+        <div class="new-questions-title">Hot Questions</div>
+        <a class="hot-questions" href="{% url "new-questions-view" %}">New Questions</a>
+    </div>
+    {% for question in questions %}
+       {% if question.likes >= 0 %}
             {% include 'inc/inc_question.html' %}
-        {% endif %}
-     {% endfor %}
+       {% endif %}
+    {% endfor %}
+    {% include 'inc/paginator.html' %}
 {% endblock content %}
 
 {% block right-side %}

@@ -6,19 +6,21 @@
             <div class="col-1">
                 <div class="likes_count">{{ question.likes }}</div>
             </div>
-            <div class="col-2">
-                <row class="up"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-up-fill"
-                        fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z" />
-                    </svg></row>
-                <row class="down">
-                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-down-fill" fill="currentColor"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
-                    </svg>
-                </row>
+            <div class="col-3 arrows-likes">
+                <a href="#">
+                    <row class="up">
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-up-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+                        </svg>
+                    </row>
+                </a>
+                <a href="#">
+                    <row class="down">
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-down-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                        </svg>
+                    </row>
+                </a>
             </div>
         </div>
     </div>
@@ -26,10 +28,14 @@
         <a class="row question-title" href="/question/{{ question.id }}">{{ question.title }}</a>
         <div class="row question-text">{{ question.text }}</div>
         <div class="row">
-            <a href="/question/{{ question.id }}" class="answers">answer ({{ question.answers }})</a>
-            <div class="tags-title">Tags:</div>
-            <a href="/tag/black-jack" class="tag-ref">black-jack</a>
-            <a href="/tag/bender" class="tag-ref">bender</a>
+        <a href="{% url "one-question-view" question.id %}" class="answers">answers ({{ question.count_answers }})</a>
+            <span class="tags-title">Tags:</span>
+            <a href="{% url "tag-view" "black-jack" %}" class="tag-ref">black-jack</a>
+            <a href="{% url "tag-view" "bender" %}" class="tag-ref">bender</a>
+        </div>
+        <div class="row">
+            <a href="profiles/{{ question.profile }}" class="question-profile">{{ question.author }}</a>
+            <span class="question-time">{{ question.date }}</span>
         </div>
 
     </div>

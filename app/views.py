@@ -19,13 +19,15 @@ def new_questions(request):
     page = paginate(questions, request, 3)
     return render(request, 'new_questions.html', {
         'questions': page,
+        'page_obj': page,
     })
 
 def hot_questions(request):
     questions = Question.objects.best()
     page = paginate(questions, request, 3)
     return render(request, 'hot_questions.html', {
-        'questions': page
+        'questions': page,
+        'page_obj': page,
     })
 
 def login_page(request):
@@ -40,9 +42,11 @@ def ask_question(request):
 def question(request, pk):
     questions = Question.objects.one(pk)
     answers = Answer.objects.all()
+    page = paginate(answers, request, 3)
     return render(request, 'question.html', {
         'questions': questions,
-        'answers': answers,
+        'answers': page,
+        'page_obj': page,
     })
 
 def signup_page(request):
