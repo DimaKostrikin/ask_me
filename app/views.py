@@ -41,7 +41,7 @@ def ask_question(request):
 
 def question(request, pk):
     questions = Question.objects.one(pk)
-    answers = Answer.objects.all()
+    answers = Answer.objects.get_by_q(pk)
     page = paginate(answers, request, 3)
     return render(request, 'question.html', {
         'questions': questions,

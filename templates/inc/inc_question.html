@@ -4,7 +4,7 @@
         <img class="question-img" src="{% static "img/200.jpg"%}"></img>
         <div class="row like-box">
             <div class="col-1">
-                <div class="likes_count">{{ question.likes }}</div>
+                <div class="likes_count">{{ question.likes.count }}</div>
             </div>
             <div class="col-3 arrows-likes">
                 <a href="#">

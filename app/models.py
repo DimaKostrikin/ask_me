@@ -1,4 +1,7 @@
 from django.db import models
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes.fields import GenericRelation
 
 class Profile(models.Model):
     name = models.CharField(max_length=32, verbose_name='Имя профиля')
@@ -36,7 +39,7 @@ class Question(models.Model):
     text = models.TextField(verbose_name='Текст вопроса')
     tag = models.CharField(max_length=16, verbose_name='Тэг вопроса')
     is_published = models.BooleanField(default=False, verbose_name='Опубликован')
-    likes = models.IntegerField(verbose_name='Лайки')
+    likes = GenericRelation('Like')
 
     date = models.DateField(auto_now_add=True, verbose_name="Дата вопроса")
     
@@ -54,13 +57,19 @@ class Question(models.Model):
         verbose_name_plural = 'Вопросы'
 
 class AnswerManager(models.Manager):
-    def published(self):
-        return self.filter(is_published=True)
+    def get_id(self, answer_id):
+        return self.get(id=answer_id)
+
+    def count(self, question_id):
+        return self.filter(question = question_id).count()
+
+    def get_by_q(self, question_id):
+        return self.filter(question = question_id)
 
 class Answer(models.Model):
     text = models.TextField(verbose_name='Текст ответа')
-    likes = models.IntegerField(verbose_name='Кол-во лайков')
-    #question = models.ForeignKey('Question', on_delete=models.CASCADE)
+    likes = GenericRelation('Like')
+    question = models.ForeignKey('Question', on_delete=models.CASCADE)
 
     author = models.ForeignKey('Profile', on_delete=models.CASCADE)
 
@@ -70,3 +79,15 @@ class Answer(models.Model):
     class Meta:
         verbose_name = 'Ответ'
         verbose_name_plural = 'Ответы'
+
+class Like(models.Model):
+    profile = models.ForeignKey('Profile', on_delete=models.CASCADE)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey('content_type', 'object_id')
+
+class Dislike(models.Model):
+    profile = models.ForeignKey('Profile', on_delete=models.CASCADE)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey('content_type', 'object_id')
