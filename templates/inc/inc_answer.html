@@ -30,5 +30,9 @@
             <input type="checkbox" class="form-check-input" id="exampleCheck1">
             <label class="form-check-label" for="exampleCheck1">Correct!</label>
         </div>
+        <div class="row">
+            <a href="profiles/{{ answer.profile }}" class="question-profile">{{ answer.author }}</a>
+            <span class="question-time">{{ answer.date }}</span>
+        </div>
     </div>
 </div>

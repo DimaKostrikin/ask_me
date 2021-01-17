@@ -30,17 +30,26 @@
             </form>
         </div>
     </div>
-    <div class="col-1">
-        <div class="row"><img src="{% static "img/200.jpg"%}" class="profile-avatar"></div>
-    </div>
-    <div class="col-3">
-        <div class="row">
-            <div class="username-text">Dr.Pepper</div>
+   
+        {% if user.is_authenticated %}
+        <div class="col-1">
+            <div class="row"><img src="{{ user.profile.avatar.url }}" class="rounded img-fluid profile-avatar"></div>
         </div>
-        <div class="row">
-            <a class="profile-settings" href="/settings">settings</a>
-            <a class="log-out" href="#">log out</a>
+        <div class="col-3">
+            <div class="row">
+                <div class="username-text">{{ user.profile.nickname }}</div>
+            </div>
+            <div class="row">
+                <a class="profile-settings" href="/settings">settings</a>
+                <a class="log-out" href="/logout">log out</a>
+            </div>
         </div>
-    </div>
+        {% else %}
+        <div class="log-in">
+            <a class="log-in" href="/login">log in</a>
+            <a class="log-in" href="/signup">sign up</a>
+        </div>
+        {% endif %}
+    
 </div>
 </nav>

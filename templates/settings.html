@@ -1,28 +1,14 @@
 {% extends 'inc/base.html' %}
 {% load static %}
+{% load bootstrap4 %}
 
 {% block content %}
-<form>
-    <div class="settings-title row">Settings: Dr. Pepper</div>
-    <div class="form-group row">
-        <label for="exampleFormControlInput1">Login</label>
-        <input type="login" class="form-control" id="exampleFormControlInput1" placeholder="Login">
-    </div>
-    <div class="form-group row">
-        <label for="exampleFormControlInput1">Email</label>
-        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="example@example.com">
-    </div>
-    <div class="form-group row">
-        <label for="exampleFormControlInput1">NickName</label>
-        <input type="nickname" class="form-control" id="exampleFormControlInput1" placeholder="nickname">
-    </div>
-    <div class="form-group row">
-        <label for="exampleFormControlInput1">Upload avatar</label>
-        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="path/to/file/avatar.jpg">
-        <button type="button-path" class="btn btn-dark button-path">choose</button>
-    </div>
-
-    <button type="button" class="btn btn-dark row">Save</button>
+<form class="form mt-5" method="POST" novalidate enctype="multipart/form-data">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+    <button type="submit" class="btn btn-dark row">Confirm!</button>
+    {% endbuttons %}
 </form>
 {% endblock content %}
 

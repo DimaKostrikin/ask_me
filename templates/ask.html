@@ -1,24 +1,15 @@
 {% extends 'inc/base.html' %}
 {% load static %}
+{% load bootstrap4 %}
+
 
 {% block content %}
-<form>
-    <div class="new-questions-title row">Ask a question</div>
-    <div class="form-group row">
-        <label for="exampleFormControlInput1">Title</label>
-        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="How to build a moon park?">
-    </div>
-    <div class="form-group row">
-        <label for="exampleFormControlTextarea1">Example textarea</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="10"
-            placeholder="Really, how? Have no idea about it!"></textarea>
-    </div>
-    <div class="form-group row">
-        <label for="exampleFormControlInput1">Tags</label>
-        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="moon, park, puzzle">
-    </div>
-
-    <button type="button" class="btn btn-dark row">ASK!</button>
+<form class="form mt-5" method="POST" novalidate>
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+    <button type="submit" class="btn btn-dark row">Log in!</button>
+    {% endbuttons %}
 </form>
 {% endblock content %}
 

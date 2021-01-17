@@ -34,9 +34,11 @@
         </div>
     </main>
 
-    <script src="js/jquery.slim.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src = "{% static "js/jquery.slim.min.js" %}"></script>
+    <script src = "{% static "js/bootstrap.min.js" %}"></script>
+
+    {% block jscode %}{% endblock %}
+
 </body>
 
 </html>

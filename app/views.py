@@ -1,10 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, reverse
 
 from django.core.paginator import Paginator
 
-from app.models import Question
-from app.models import Answer
-from app.models import Profile
+from app.models import Question, Answer, Profile
+from django.views.decorators.http import require_POST
+from django.contrib import auth
+from app.forms import *
+
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 
 answers = [
     {
@@ -31,26 +35,81 @@ def hot_questions(request):
     })
 
 def login_page(request):
-    return render(request, 'login.html', {})
+    if request.method == 'GET':
+        form = LoginForm()
+    else:
+        form = LoginForm(data=request.POST)
+        if form.is_valid():
+            user = auth.authenticate(request, **form.cleaned_data)
+            if user is not None:
+                auth.login(request, user)
+                return redirect("/")  # правильный редирект
 
+    ctx = {'form': form}
+    return render(request, 'login.html', ctx)
+
+
+def logout(request):
+    auth.logout(request)
+    return redirect("/")
+
+@login_required
 def settings_page(request):
-    return render(request, 'settings.html', {})
-
-def ask_question(request):
-    return render(request, 'ask.html', {})
+    form_class = AvatarForm
+    if request.method == 'GET':
+        form = form_class()
+    else:
+        form = form_class(data=request.POST, files=request.FILES, instance=request.user)
+        form.save()
+        if form.is_valid():
+            return redirect(reverse('settings-view'))
+    ctx = {'form': form}
+    return render(request, 'settings.html', ctx)
 
 def question(request, pk):
     questions = Question.objects.one(pk)
     answers = Answer.objects.get_by_q(pk)
     page = paginate(answers, request, 3)
+    
+    if request.method == 'GET':
+        form = AnswerForm()
+    else:
+        form = AnswerForm(data=request.POST, qid=Question.objects.get_by_id(pk), profile=request.user.profile)
+        if form.is_valid():
+            answer = form.save()
+            return redirect(reverse('one-question-view', kwargs={'pk': pk}))
     return render(request, 'question.html', {
         'questions': questions,
         'answers': page,
         'page_obj': page,
+        'form': form,
     })
 
+@login_required
+def ask_question(request):
+    if request.method == 'GET':
+        form = AskForm()
+    else:
+        form = AskForm(data=request.POST)
+        if form.is_valid():
+            question = form.save(commit=False)
+            question.author = request.user.profile
+            question.save()
+            return redirect(reverse('one-question-view', kwargs={'pk': question.pk}))
+    ctx = {'form': form}
+    return render(request, 'ask.html', ctx)
+
+
 def signup_page(request):
-    return render(request, 'signup.html', {})
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            auth.login(request, user)
+            return redirect('/')
+    else:
+        form = SignUpForm()
+    return render(request, 'signup.html', {'form': form})
 
 
 def tagged_questions(request, pk):
@@ -68,3 +127,15 @@ def paginate(object_list, request, per_page=10):
     page = paginator.get_page(page)
 
     return page
+
+@require_POST
+@login_required
+def vote(request):
+    data = request.POST
+    from pprint import pformat
+    print('\n\n', '=' * 100)
+    print(f'HERE: {pformat(data)}')
+    print('=' * 100, '\n\n')
+    # обработка лайков
+    return JsonResponse({'question_likes': 42})
+    pass
