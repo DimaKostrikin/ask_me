@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, reverse
 
 from django.core.paginator import Paginator
 
-from app.models import Question, Answer, Profile
+from app.models import *
 from django.views.decorators.http import require_POST
 from django.contrib import auth
 from app.forms import *
@@ -128,14 +128,31 @@ def paginate(object_list, request, per_page=10):
 
     return page
 
+def index(request):
+
+    print('\n\n', '='*100)
+    print(f'HELLO: {request.session.get("hello")}')
+    print('\n\n', '='*100)
+
+    questions = Question.objects.all()
+    nums = {}
+    for question in questions:
+        nums[question.id] = Answer.objects.count(question.id)
+    questions = pages(questions, 2, request)
+    return render(request, 'index.html', {'elems': questions, 'nums': nums})
+
 @require_POST
 @login_required
 def vote(request):
     data = request.POST
-    from pprint import pformat
-    print('\n\n', '=' * 100)
-    print(f'HERE: {pformat(data)}')
-    print('=' * 100, '\n\n')
+    qid = data['qid']
+    action = data['action']
+    user = request.user.profile
     # обработка лайков
-    return JsonResponse({'question_likes': 42})
-    pass
+    rate = RatingQuestions.objects.find_eu(qid, user)
+    if not rate:
+        new_rate = RatingQuestions.objects.change_rate(qid, user, action)
+        response = {"response": new_rate, "success": True}
+    else:
+        response = {"response": 0, "success": False}
+    return JsonResponse(response)
